@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Post - Forum</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Forum</div>
+            <ul>
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="auth-container">
+            <h2>Create New Post</h2>
+            <!-- {{if .Errors}}
+                {{range .Errors}}
+                    <p class="error">{{.}}</p>
+                {{end}}
+            {{end}} -->
+            <form class="new-post-form" action="/new-post" method="POST">
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" required minlength="5" maxlength="30" value="{{.Title}}">
+                </div>
+                <div class="form-group">
+                    <label for="content">Content:</label>
+                    <textarea id="content" name="content" required minlength="10" maxlength="200">{{.Content}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="categories">Categories:</label>
+                    <div id="categories">
+                        {{range .Categories}}
+                        <label>
+                            <input type="checkbox" name="categories" value="{{.ID}}"> {{.Name}}
+                        </label>
+                        {{end}}
+                    </div>
+                </div>
+                {{if .Errors}}
+                {{range .Errors}}
+                    <p class="error">{{.}}</p>
+                {{end}}
+            {{end}}
+                <button type="submit" class="btn">Create Post</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Forum. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const form = document.querySelector('.new-post-form');
+            form.addEventListener('submit', function (event) {
+                const titleInput = document.getElementById('title');
+                const contentInput = document.getElementById('content');
+                const title = titleInput.value.trim();
+                const content = contentInput.value.trim();
+                if (title === "" || content === "") {
+                    event.preventDefault();
+                    alert('Please fill in all fields.');
+                }
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+version: '3'
+services:
+  forum:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+
+##If you've made changes to your code or Dockerfile and want to ensure they're included,use:
+##docker-compose up --build
+##To stop the container, you can press Ctrl+C in the terminal where docker-compose is running, or run:
+##docker-compose down

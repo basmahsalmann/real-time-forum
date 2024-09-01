@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+ 
+<body>
+    <header>
+        <nav>
+            <div class="logo">Forum</div>
+            <ul>
+                {{if .LoggedIn}}
+                <li><a href="/new-post"><i class="fas fa-plus"></i> New Post</a></li>
+                <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                {{else}}
+                <li><a href="/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="/register"><i class="fas fa-user-plus"></i> Register</a></li>
+                {{end}}
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section id="filter">
+            <h2>Filter Posts</h2>
+            <form id="filter-form" action="/" method="GET">
+                <div class="filter-group">
+                    <label for="category-select">Category:</label>
+                    <select name="category" id="category-select">
+                        <option value="">All Categories</option>
+                        {{range .Categories}}
+                        <option value="{{.ID}}">{{.Name}}</option>
+                        {{end}}
+                    </select>
+                </div>
+
+                {{if .LoggedIn}}
+                <div class="filter-group">
+                    <label>Post Type:</label>
+                    <div class="radio-group">
+                        <input type="radio" id="allPosts" name="filter" value="all" checked>
+                        <label for="allPosts">All Posts</label>
+                    
+                        <input type="radio" id="myPosts" name="filter" value="my-posts">
+                        <label for="myPosts">My Posts</label>
+                    
+                        <input type="radio" id="likedPosts" name="filter" value="liked-posts">
+                        <label for="likedPosts">Liked Posts</label>
+                    </div>
+                </div>
+                {{end}}
+
+                <button type="submit">Apply Filter</button>
+            </form>
+        </section>
+
+        <section id="posts">
+            <h2>Recent Posts</h2>
+            <div id="posts-container" class="grid">
+                {{if .Posts}}
+                    {{range .Posts}}
+                    <div class="post card">
+                        <div class="post-meta">
+                            <h3>{{.Title}}</h3>
+                            <p>{{.Content}}</p>
+                            <span class="category">
+                                <i class="fas fa-tag"></i>
+                                {{- range $index, $category := .Categories -}}
+                                    {{- if $index -}}, {{ end -}}
+                                    {{- $category -}}
+                                {{- end -}}
+                            </span>
+                                                  
+                            <span class="author"><i class="fas fa-user"></i> {{.Author}}</span>
+                        </div>
+                        <div class="post-actions">
+                            {{if $.LoggedIn}}
+                                <form action="/like/post/{{.ID}}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn-like"><i class="fas fa-thumbs-up"></i></button>
+                                </form>
+                                <span class="like-count">{{.Likes}}</span>
+                                <form action="/dislike/post/{{.ID}}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn-dislike"><i class="fas fa-thumbs-down"></i></button>
+                                </form>
+                                <span class="dislike-count">{{.Dislikes}}</span>
+                            {{else}}
+                                <button type="button" class="btn-like" disabled><i class="fas fa-thumbs-up"></i></button>
+                                <span class="like-count">{{.Likes}}</span>
+                                <button type="button" class="btn-dislike" disabled><i class="fas fa-thumbs-down"></i></button>
+                                <span class="dislike-count">{{.Dislikes}}</span>
+                            {{end}}
+                            <!-- <span class="like-count">{{.Dislikes}}</span> -->
+                            <a href="/post/{{.ID}}" class="btn-comments"><i class="fas fa-comments"></i> View Comments</a>
+                        </div>
+                    </div>
+                    {{end}}
+                {{else}}
+                    <p>No posts found.</p>
+                {{end}}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Forum. All rights reserved.</p>
+    </footer>
+
+    <script>
+        window.onload = function() {
+            // Retrieve selected category and post type from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const selectedCategory = urlParams.get('category');
+            const selectedFilter = urlParams.get('filter');
+    
+            // Set the dropdown to the selected category
+            if (selectedCategory) {
+                document.getElementById('category-select').value = selectedCategory;
+            }
+    
+            // Set the radio button to the selected post type
+            if (selectedFilter) {
+                document.querySelector(`input[name="filter"][value="${selectedFilter}"]`).checked = true;
+            }
+        };
+    </script>
+    
+
+</body>
+</html>
+ 

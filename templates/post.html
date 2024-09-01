@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Post.Title}} - Forum</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Forum</div>
+            <ul>
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                {{if .LoggedIn}}
+                    <li><a href="/new-post"><i class="fas fa-plus"></i> New Post</a></li>
+                    <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                {{else}}
+                    <li><a href="/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    <li><a href="/register"><i class="fas fa-user-plus"></i> Register</a></li>
+                {{end}}
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        {{range .Errors}}
+    <p class="error">{{.}}</p>
+{{end}}
+        <article class="post card">
+            <h2>{{.Post.Title}}</h2>
+            <p>{{.Post.Content | nl2br}}</p>
+            <div class="post-meta">
+                <span class="category">
+                    <i class="fas fa-tag"></i>
+                    {{- range $index, $category := .Post.Categories -}}
+                                    {{- if $index -}}, {{ end -}}
+                                    {{- $category -}}
+                                {{- end -}}
+                </span>            
+                <span class="author">By: {{.Post.Author}}</span>
+            </div>
+            <div class="post-actions">
+                {{if .LoggedIn}}
+                    <form action="/like/post/{{.Post.ID}}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn-like"><i class="fas fa-thumbs-up"></i> {{.Post.Likes}}</button>
+                    </form>
+                    <form action="/dislike/post/{{.Post.ID}}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn-dislike"><i class="fas fa-thumbs-down"></i> {{.Post.Dislikes}}</button>
+                    </form>
+                {{else}}
+                    <span class="like-count"><i class="fas fa-thumbs-up"></i> {{.Post.Likes}}</span>
+                    <span class="dislike-count"><i class="fas fa-thumbs-down"></i> {{.Post.Dislikes}}</span>
+                {{end}}
+            </div>
+        </article>
+
+        <section id="comments" class="card">
+            <h3>Comments</h3>
+            {{if .Comments}}
+                {{range .Comments}}
+                <div class="comment">
+                    <p>{{.Content | nl2br}}</p>
+                    <div class="comment-meta">
+                        <span class="author"><i class="fas fa-user"></i> {{.Author}}</span>
+                    </div>
+                    <div class="comment-actions">
+                        {{if $.LoggedIn}}
+                            <form action="/like/comment/{{.ID}}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn-like"><i class="fas fa-thumbs-up"></i> {{.Likes}}</button>
+                            </form>
+                            <form action="/dislike/comment/{{.ID}}" method="POST" style="display:inline;">
+                                <button class="btn-dislike"><i class="fas fa-thumbs-down"></i> {{.Dislikes}}</button>
+                            </form>
+                        {{else}}
+                            <span class="like-count"><i class="fas fa-thumbs-up"></i> {{.Likes}}</span>
+                            <span class="dislike-count"><i class="fas fa-thumbs-down"></i> {{.Dislikes}}</span>
+                        {{end}}
+                    </div>
+                </div>
+                {{end}}
+            {{else}}
+                <p>No comments yet.</p>
+            {{end}}
+        </section>
+       
+        {{if .LoggedIn}}
+        <section id="add-comment" class="card">
+            <h3>Add a Comment</h3>
+            <form action="/post/{{.Post.ID}}/comment" method="POST" id="comment-form">
+                <textarea name="content" placeholder="Write your comment here..." required minlength="10" maxlength="500"></textarea>
+                <button type="submit">Submit Comment</button>
+            </form>
+        </section>
+        {{else}}
+        <section id="login-to-comment" class="card">
+            <p>Please <a href="/login">log in</a> to post comments.</p>
+        </section>
+        {{end}}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Forum. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const commentForm = document.getElementById('comment-form');
+        commentForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const content = document.querySelector('textarea[name="content"]').value;
+            if (content.trim() === '') {
+                alert('Please enter a comment.');
+                return;
+            }
+            commentForm.submit();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Forum</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Forum</div>
+            <ul>
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/register"><i class="fas fa-user-plus"></i> Register</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="auth-form-container">
+            <h2>Login</h2>
+            <form class="auth-form" action="/login" method="POST">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>        
+                {{if .Error}}
+                <p class="error">{{.Error}}</p>
+                {{end}}
+                <button type="submit">Login</button>
+            </form>
+            <p class="auth-link">Don't have an account? <a href="/register">Register</a></p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Forum. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -18,17 +18,18 @@ func main() {
 		}
 		h.RecoveryHandler(h.HomeHandler)(w, r)
 	})
-	http.HandleFunc("/login", h.RecoveryHandler(h.LoginHandler))
-	http.HandleFunc("/register", h.RecoveryHandler(h.RegisterHandler))
-	http.HandleFunc("/logout", h.RecoveryHandler(h.LogoutHandler))
-	http.HandleFunc("/create-post", h.RecoveryHandler(h.CreatePostHandler))
-	http.HandleFunc("/post/", h.RecoveryHandler(h.PostAndCommentHandler))
-	http.HandleFunc("/like/", h.RecoveryHandler(h.LikeHandler))
-	http.HandleFunc("/dislike/", h.RecoveryHandler(h.DislikeHandler))
-	http.HandleFunc("/new-post", h.RecoveryHandler(h.CreatePostHandler))
-	http.HandleFunc("/categories", h.RecoveryHandler(h.CategoriesHandler))
-	http.HandleFunc("/add-category", h.RecoveryHandler(h.AddCategoryHandler))
+	// http.HandleFunc("/login", h.RecoveryHandler(h.LoginHandler))
+	// http.HandleFunc("/register", h.RecoveryHandler(h.RegisterHandler))
+	// http.HandleFunc("/logout", h.RecoveryHandler(h.LogoutHandler))
+	// http.HandleFunc("/create-post", h.RecoveryHandler(h.CreatePostHandler))
+	// http.HandleFunc("/post/", h.RecoveryHandler(h.PostAndCommentHandler))
+	// http.HandleFunc("/like/", h.RecoveryHandler(h.LikeHandler))
+	// http.HandleFunc("/dislike/", h.RecoveryHandler(h.DislikeHandler))
+	// http.HandleFunc("/new-post", h.RecoveryHandler(h.CreatePostHandler))
+	// http.HandleFunc("/categories", h.RecoveryHandler(h.CategoriesHandler))
+	// http.HandleFunc("/add-category", h.RecoveryHandler(h.AddCategoryHandler))
 
+	// Needed to serve static files 
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 

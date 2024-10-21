@@ -17,7 +17,7 @@
   </head>
 
   <body>
-    <header>
+    <!-- <header>
       <nav>
         <div class="logo">Forum</div>
         <ul>
@@ -38,9 +38,85 @@
           {{end}}
         </ul>
       </nav>
-    </header>
+    </header> -->
 
     <main class="container">
+      <div id="registrationView" class="auth-form-container">
+        <h2>Register</h2>
+        <form class="auth-form" method="POST" id = "registrationForm">
+          <input
+            id="first_name"
+            type="text"
+            name="first_name"
+            placeholder="First Name"
+            
+            minlength="3"
+            maxlength="20"
+          />
+          <input
+            id="last_name"
+            type="text"
+            name="last_name"
+            placeholder="Last Name"
+            
+            minlength="3"
+            maxlength="20"
+          />
+          <input
+            id="nickname"
+            type="text"
+            name="nickname"
+            placeholder="Nickname"
+            
+            minlength="3"
+            maxlength="20"
+          />
+          <input
+            id="age"
+            type="number"
+            name="age"
+            placeholder="Age"
+            
+            minlength="1"
+            maxlength="2"
+          />
+          <label for="gender">Gender:</label>
+          <div>
+              <input type="radio" id="male" name="gender" value="male">
+              <label for="male">Male</label>
+          </div>
+          <div>
+              <input type="radio" id="female" name="gender" value="female">
+              <label for="female">Female</label>
+          </div>
+          <div>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="Email"
+            
+            minlength="15"
+            maxlength="30"
+          />
+          <input
+            id="password"
+            type="password"
+            name="password"
+            placeholder="Password"
+            
+            minlength="8"
+            maxlength="20"
+          />
+          <button type="submit">Register</button>
+        </form>
+        <p class="auth-link">
+          Already have an account? <a href="/login">Login</a>
+        </p>
+      </div>
+    </main>
+
+    <!-- <main class="container">
       <section id="filter">
         <h2>Filter Posts</h2>
         <form id="filter-form" action="/" method="GET">
@@ -135,7 +211,6 @@
               </button>
               <span class="dislike-count">{{.Dislikes}}</span>
               {{end}}
-              <!-- <span class="like-count">{{.Dislikes}}</span> -->
               <a href="/post/{{.ID}}" class="btn-comments"
                 ><i class="fas fa-comments"></i> View Comments</a
               >
@@ -146,13 +221,15 @@
           {{end}}
         </div>
       </section>
-    </main>
+    </main> -->
 
     <footer>
       <p>&copy; 2024 Forum. All rights reserved.</p>
     </footer>
 
-    <script>
+    <script src="../static/script.js"></script>
+
+    <!-- <script>
       window.onload = function () {
         // Retrieve selected category and post type from URL parameters
         const urlParams = new URLSearchParams(window.location.search);
@@ -171,6 +248,6 @@
           ).checked = true;
         }
       };
-    </script>
+    </script> -->
   </body>
 </html>

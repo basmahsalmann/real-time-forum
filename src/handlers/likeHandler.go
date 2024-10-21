@@ -2,9 +2,9 @@ package forum
 
 import (
 	"database/sql"
-	t "forum/src/database"
 	"log"
 	"net/http"
+	t "real-time-forum/src/database"
 	"strconv"
 	"strings"
 )

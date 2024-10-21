@@ -23,7 +23,11 @@ func createTables() {
 	schema := `
 	CREATE TABLE IF NOT EXISTS user (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		username TEXT UNIQUE NOT NULL,
+		nickname TEXT UNIQUE NOT NULL,
+		age INTEGER,
+		gender TEXT,
+		first_name TEXT,
+		last_name TEXT,
 		password TEXT NOT NULL,
 		email TEXT UNIQUE NOT NULL
 	);

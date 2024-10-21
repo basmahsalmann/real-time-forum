@@ -2,9 +2,9 @@ package forum
 
 import (
 	"html/template"
-	"strings"
 	"log"
-	h "forum/src/structs"
+	h "real-time-forum/src/structs"
+	"strings"
 )
 
 func init() {

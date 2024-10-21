@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	h "forum/src/handlers"
 	"log"
 	"net/http"
 	"os"
+	h "real-time-forum/src/handlers"
 
 	_ "github.com/mattn/go-sqlite3"
 )
